@@ -56,7 +56,7 @@ export const DefaultLayout: FunctionComponent<PropsWithChildren<DefaultLayoutPro
             {/* <div className="container"> */}
                 <div className="header-title">
                     <h1>
-                        Book Store
+                        LitApp
                     </h1>
                 </div>
                 {
