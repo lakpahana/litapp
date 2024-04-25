@@ -1,7 +1,9 @@
 {
-    "clientID": "SQweSjXZXnJMVuYiO9vZa59PEYca",
-    "baseUrl": "https://api.asgardeo.io/t/iorg",
-    "signInRedirectURL": "https://book-store.choreoapps.dev",
-    "signOutRedirectURL": "https://book-store.choreoapps.dev",
-    "scope": ["profile"]
+    "clientID": "8RmGfJdE9XkBC4eHfz0sKy0w5yYa",
+    "baseUrl": "https://api.asgardeo.io/t/lakpahana",
+    "signInRedirectURL": "https://litapp.us-cdp2.choreoapps.dev",
+    "signOutRedirectURL": "https://litapp.us-cdp2.choreoapps.dev",
+    "scope": [
+        "profile"
+    ]
 }
