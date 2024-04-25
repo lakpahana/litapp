@@ -51,7 +51,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
     const fetchBooks = async () => {
       try {
         const accessToken = await getAccessToken();
-        const response = await axios.get<Book[]>('https://04ef0bb4-e44c-469a-b881-d5e935130fb2-prod.e1-us-east-azure.choreoapis.dev/kqrg/bookstorebackend/endpoint-9090-803/v1/books', {
+        const response = await axios.get<Book[]>('https://3ecdd0d5-4f69-4ff5-9d2b-e45d33bf5e0d-dev.e1-us-cdp-2.choreoapis.dev/litapp/api/endpoint-9090-803/v1.0/books', {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + accessToken,
@@ -68,7 +68,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
     const addBook = async () => {
       const accessToken = await getAccessToken();
       try {
-        await axios.post('https://04ef0bb4-e44c-469a-b881-d5e935130fb2-prod.e1-us-east-azure.choreoapis.dev/kqrg/bookstorebackend/endpoint-9090-803/v1/books', newBook, {
+        await axios.post('https://3ecdd0d5-4f69-4ff5-9d2b-e45d33bf5e0d-dev.e1-us-cdp-2.choreoapis.dev/litapp/api/endpoint-9090-803/v1.0/books', newBook, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + accessToken,
@@ -93,7 +93,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
     const getBookById = async () => {
       const accessToken = await getAccessToken();
       try {
-        const response = await axios.get<Book>(`https://04ef0bb4-e44c-469a-b881-d5e935130fb2-prod.e1-us-east-azure.choreoapis.dev/kqrg/bookstorebackend/endpoint-9090-803/v1/books/${bookIdToGet}`, {
+        const response = await axios.get<Book>(`https://3ecdd0d5-4f69-4ff5-9d2b-e45d33bf5e0d-dev.e1-us-cdp-2.choreoapis.dev/litapp/api/endpoint-9090-803/v1.0/books/${bookIdToGet}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + accessToken,
@@ -109,7 +109,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
     const updateBook = async () => {
       const accessToken = await getAccessToken();
       try {
-        await axios.put('https://04ef0bb4-e44c-469a-b881-d5e935130fb2-prod.e1-us-east-azure.choreoapis.dev/kqrg/bookstorebackend/endpoint-9090-803/v1/books', updatedBook, {
+        await axios.put('https://3ecdd0d5-4f69-4ff5-9d2b-e45d33bf5e0d-dev.e1-us-cdp-2.choreoapis.dev/litapp/api/endpoint-9090-803/v1.0/books', updatedBook, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + accessToken,
@@ -134,7 +134,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
     const deleteBook = async () => {
       const accessToken = await getAccessToken();
       try {
-        await axios.delete(`https://04ef0bb4-e44c-469a-b881-d5e935130fb2-prod.e1-us-east-azure.choreoapis.dev/kqrg/bookstorebackend/endpoint-9090-803/v1/books/${bookIdToDelete}`, {
+        await axios.delete(`https://3ecdd0d5-4f69-4ff5-9d2b-e45d33bf5e0d-dev.e1-us-cdp-2.choreoapis.dev/litapp/api/endpoint-9090-803/v1.0/books/${bookIdToDelete}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + accessToken,
