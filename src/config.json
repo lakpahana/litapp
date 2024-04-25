@@ -1,0 +1,7 @@
+{
+    "clientID": "SQweSjXZXnJMVuYiO9vZa59PEYca",
+    "baseUrl": "https://api.asgardeo.io/t/iorg",
+    "signInRedirectURL": "https://book-store.choreoapps.dev",
+    "signOutRedirectURL": "https://book-store.choreoapps.dev",
+    "scope": ["profile"]
+}

@@ -1,0 +1,62 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  input {
+    margin: 5px;
+    font-size: large;
+  }
+  
+  label {
+    font-size: small;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .add-update-delete {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .add-book,
+  .get-book,
+  .update-book,
+  .delete-book {
+    margin-bottom: 20px;
+  }
+  
+  .add-book input,
+  .get-book input,
+  .update-book input,
+  .delete-book input {
+    margin-right: 10px;
+  }
+  
+  .add-book button,
+  .get-book button,
+  .update-book button,
+  .delete-book button {
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
