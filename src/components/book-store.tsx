@@ -1,23 +1,12 @@
 
 import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
-import axios from 'axios';
-import './book-store.css'
 import { useAuthContext } from "@asgardeo/auth-react";
-interface Book {
-    id: number;
-    book_title: string;
-    author: string;
-    category: string;
-    published_year: number;
-    price: number;
-    copies_in_stock: number;
-  }
-
 export const BookStore: FunctionComponent = (): ReactElement => {
   const {
     getAccessToken,getBasicUserInfo
   } = useAuthContext();
 
+  const [user, setUser] = useState(null);
 
     // const API = process.env.BACKEND_ENDPOINT
 
@@ -33,6 +22,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
         console.log(accessToken);
         const getBasicUserInfos = await getBasicUserInfo();
         console.log(getBasicUserInfos);
+        setUser(getBasicUserInfos);
         // setBooks(response.data);
       } catch (error) {
         console.error('Error fetching books:', error);
@@ -46,6 +36,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
     return (
       <>
       Loading ..
+      {user && <div> Welcome {user.username} </div>}
       </>
 
     );
