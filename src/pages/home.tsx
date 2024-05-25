@@ -150,9 +150,8 @@ export const HomePage: FunctionComponent = (): ReactElement => {
                 state.isAuthenticated
                     ? (
                         <div className="content">
-                            <BookStore
-                                // derivedResponse={ derivedAuthenticationState }
-                            />
+                            Main Content
+                            <BookStore  />
                             <button
                                 className="btn primary mt-4"
                                 onClick={ () => {
