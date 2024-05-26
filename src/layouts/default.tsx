@@ -53,15 +53,22 @@ export const DefaultLayout: FunctionComponent<PropsWithChildren<DefaultLayoutPro
 
     return (
         <>
-            {/* <div className="container"> */}
                 <div className="header-title">
-                    <h1>
+                    {/* <h1>
                         LitApp
-                    </h1>
+                    </h1> */}
+
+                    {/* bootrsrap naviagtion bar */}
+               
                 </div>
                 {
                     isLoading
-                        ? <div className="content">Loading ...</div>
+                        ? <div className="content">
+                           <div className="spinner-border" role="status">
+  <span className="sr-only">Loading...</span>
+</div>
+
+                        </div>
                         : hasErrors
                             ? <div className="content">An error occured while authenticating ...</div>
                             : children

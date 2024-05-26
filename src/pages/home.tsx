@@ -1,25 +1,6 @@
-/**
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- *
- * WSO2 Inc. licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-
 import { BasicUserInfo, Hooks, useAuthContext } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
 import { default as authConfig } from "../config.json";
-import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
 import { BookStore } from "../components";
 import { useLocation } from "react-router-dom";
@@ -145,25 +126,62 @@ export const HomePage: FunctionComponent = (): ReactElement => {
         <DefaultLayout
             isLoading={ state.isLoading }
             hasErrors={ hasAuthenticationErrors }
-        >
+        > 
+
+<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <div className="container-fluid">
+                            <a className="navbar-brand" href="#">LitApp</a>
+                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+                                                        <div className="collapse navbar-collapse" id="navbarNav">
+                                <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <a className="nav-link active" aria-current="page" href="/home">Home</a>
+                                    </li>
+                                    //if user is authenticated, show the logout button
+                                    {state.isAuthenticated && (
+                                        <li className="nav-item">
+                                            <a className="nav-link" onClick={handleLogout}>Logout</a>
+                                        </li>
+                                    )}
+                                    //if user is not authenticated, show the login button
+                                    {!state.isAuthenticated && (
+                                        <li className="nav-item">
+                                            <a className="nav-link" onClick={handleLogin}>Login</a>
+                                        </li>
+                                    )}
+                                   
+                                </ul>
+
+                                </div>
+                        </div>
+                    </nav>
+
+
+      
             {
                 state.isAuthenticated
                     ? (
-                        <div className="content">
-                            Main Content
-                            <BookStore  />
-                            <button
-                                className="btn primary mt-4"
-                                onClick={ () => {
-                                    handleLogout();
-                                } }
-                            >
-                                Logout
-                            </button>
-                        </div>
+                        // <div className="content container">
+                           
+                        //     <button
+                        //         className="btn primary mt-4"
+                        //         onClick={ () => {
+                        //             handleLogout();
+                        //         } }
+                        //     >
+                        //         Logout
+                        //     </button>
+                        // </div>
+                        <div className="container">
+
+
+                        <BookStore  />
+    </div>
                     )
                     : (
-                        <div className="content">
+                        <div className="content container">
         
                             <button
                                 className="btn primary"

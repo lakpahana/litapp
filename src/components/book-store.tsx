@@ -1,6 +1,10 @@
 
 import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
+import { db } from "../firebase";
+import Classroom from "./classroom";
+
+
 export const BookStore: FunctionComponent = (): ReactElement => {
   const {
     getAccessToken,getBasicUserInfo
@@ -10,7 +14,7 @@ export const BookStore: FunctionComponent = (): ReactElement => {
 
     // const API = process.env.BACKEND_ENDPOINT
 
-
+    
   
     useEffect(() => {
       fetchBooks();
@@ -35,8 +39,9 @@ export const BookStore: FunctionComponent = (): ReactElement => {
  
     return (
       <>
-      Loading ..
-      {user && <div> Welcome {user.username} </div>}
+      
+      <Classroom />
+      {/* {user && <div> Welcome {user.username} </div>} */}
       </>
 
     );
