@@ -67,9 +67,9 @@ function callFirebase(string accessToken) returns json|error {
     return check firebaseResponse.getJsonPayload();
 }
 
-function sendData(json data, string accessToken) returns error? {
+function sendData(json data, string? uid, string accessToken) returns error? {
     // Create HTTP client to make PUT request
-    http:Client httpClient = check new (FIREBASE_URL + "users.json?access_token=" + accessToken);
+    http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json ?access_token = " + accessToken);
 
     // Create PUT request
     http:Request putRequest = new;
@@ -77,7 +77,7 @@ function sendData(json data, string accessToken) returns error? {
     putRequest.setHeader("Content-Type", "application/json");
 
     // Send PUT request
-    http:Response putResponse = check httpClient->put("", putRequest);
+    http:Response putResponse = check httpClient->post("", putRequest);
 
     // Check response status
     if (putResponse.statusCode == 200) {
@@ -117,7 +117,7 @@ service asgardeo:RegistrationService on webhookListener {
                 }
             };
             string accessToken = check getAccessToken();
-            check sendData(userSave2, accessToken);
+            check sendData(userSave2, userId, accessToken);
 
         } else {
             // Handle the case where eventData2 is null
