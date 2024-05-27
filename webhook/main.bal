@@ -115,10 +115,15 @@ service asgardeo:RegistrationService on webhookListener {
                 "lastName": lastName
             };
 
+            //make userid as the key
+            json userSave2 = {
+                userId: userSave
+            };
+
             // Generate the access token
             string accessToken = check getAccessToken();
             // Send data to Firebase
-            check sendData(userSave, accessToken);
+            check sendData(userSave2, accessToken);
 
         } else {
             // Handle the case where eventData2 is null
