@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import TextEditorDataService from '../services/TextEditorDataService';
 import { onValue, DataSnapshot } from 'firebase/database';
 import Editor from 'react-simple-code-editor';
+import { useAuthContext } from '@asgardeo/auth-react';
+
 // import { highlight, languages } from 'prismjs/components/prism-core';
 
 import { highlight, languages } from 'prismjs';
@@ -32,16 +34,30 @@ const Classroom: React.FC = () => {
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [notification, setNotification] = useState<{ type: string, text: string } | null>(null);
+  const { isAuthenticated,getBasicUserInfo,state } = useAuthContext();
+  const [user, setCurrentUser] = useState(null);
 
-  const user = {
-    uid: '123',
-    displayName: 'John Doe',
-    name: 'John Doe'
-  };
+  // const user = {
+  //   uid: '123',
+  //   displayName: 'John Doe',
+  //   name: 'John Doe'
+  // };
+
+  const userFunctions = async () => {
+    const userBasic = await getBasicUserInfo();
+    let user = {
+      uid: userBasic?.sub,
+      displayName: "John Doe3",
+      name: "John Doe3"
+    }
+    setCurrentUser(user);
+  }
+
 
   useEffect(() => {
     setLoading(true);
-
+    userFunctions();
+    console.log('user', user);
     const handleValue = (snapshot: DataSnapshot) => {
       const filesArray: File[] = [];
       snapshot.forEach((child) => {
