@@ -1,7 +1,7 @@
 {
     "clientID": "8RmGfJdE9XkBC4eHfz0sKy0w5yYa",
     "baseUrl": "https://api.asgardeo.io/t/lakpahana",
-    "signInRedirectURL": "http://localhost:3000/",
+    "signInRedirectURL": "https://litapp.us-cdp2.choreoapps.dev/",
     "signOutRedirectURL": "https://litapp.us-cdp2.choreoapps.dev/",
     "scope": [
         "profile"
