@@ -10,6 +10,7 @@ const Storage = ({ user }: { user: any }) => {
   const fileInput = useRef(null);
 
   useEffect(() => {
+    console.log('user', user);
     retrieveFiles();
   }, []);
 

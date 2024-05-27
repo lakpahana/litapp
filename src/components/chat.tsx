@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { onValue } from 'firebase/database';
 import TextEditorDataService from '../services/TextEditorDataService';
 import './chat.css';
-const Chat = () => {
+const Chat = ({ user }: { user: any }) => {
   const [chatTextNow, setChatTextNow] = useState('');
   const [chatHistory, setChatHistory] = useState('');
-  const displayName = 'John Doe'; // Replace this with actual user displayName if available
+  const displayName = user.displayName; // Replace this with actual user displayName if available
 
   const sendChat = () => {
     const sendText = `<b>${displayName}</b> : ${chatTextNow}`;

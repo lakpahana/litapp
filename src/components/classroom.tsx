@@ -222,7 +222,7 @@ const Classroom: React.FC = () => {
                   <p className="p-0 m-0 flex-grow-1" onClick={() => loadToEditor(file.fkey)}>
                     <b>{file.fname}</b> : <i style={{ fontSize: 'small' }}>{file.oname} ( {file.dateAdded} )</i>
                   </p>
-                  {file.owner === user.uid && (
+                  {user && file.owner === user.uid && (
                     <input
                       onClick={() => deleteFile(file.fkey)}
                       className="input-group-text-5"
@@ -267,10 +267,18 @@ const Classroom: React.FC = () => {
         <div className="col-3">
           {/* <Storage />
           <Chat /> */}
-          <Storage
+          {/* if user is not null then render Stroagte */}
+           {
+            user && <Storage user={user} />
+           } 
+          {/* <Storage
           user={user}
-          />
-          <Chat></Chat>
+          /> */}
+          {
+            user && <Chat user={user} />
+          }
+          
+          {/* <Chat></Chat> */}
         </div>
       </div>
     </div>

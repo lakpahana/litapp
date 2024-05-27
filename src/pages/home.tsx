@@ -142,11 +142,16 @@ export const HomePage: FunctionComponent = (): ReactElement => {
           <ul className="navbar-nav ms-auto">
             {state.isAuthenticated ? (
               <li className="nav-item">
-                <a className="nav-link" onClick={handleLogout}>Logout</a>
+                <a className="nav-link"
+                    style={{ cursor: "pointer" }}
+                onClick={handleLogout}>Logout</a>
               </li>
             ) : (
               <li className="nav-item">
-                <a className="nav-link" onClick={handleLogin}>Login</a>
+                <a className="nav-link" onClick={handleLogin}
+                    style={{ cursor: "pointer" }}
+                
+                >Login</a>
               </li>
             )}
           </ul>
@@ -165,7 +170,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
                             <div className="container">
                                 <h1 className="display-3 fw-bold">Get Coding Help from Peers</h1>
                                 <p className="lead">LitApp connects students with peers who can provide coding help.</p>
-                                <a className="btn btn-primary btn-lg mt-3" href="#" rel="ugc">Try it Now</a>
+                                <a className="btn btn-primary btn-lg mt-3" href="#" rel="ugc" onClick={handleLogin}>Try it Now</a>
                             </div>
                         </section>
                         <section className="py-5 border-bottom">
