@@ -77,7 +77,7 @@ function sendData(json data, string accessToken) returns error? {
     putRequest.setHeader("Content-Type", "application/json");
 
     // Send PUT request
-    http:Response putResponse = check httpClient->post("", putRequest);
+    http:Response putResponse = check httpClient->put("", putRequest);
 
     // Check response status
     if (putResponse.statusCode == 200) {
