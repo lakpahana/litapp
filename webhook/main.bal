@@ -71,7 +71,7 @@ function sendData(json data, string? uid, string accessToken) returns error? {
     // Create HTTP client to make PUT request
     log:printInfo("Sending data to Firebase...");
     log:printInfo(FIREBASE_URL + "users/" + uid.toString() + ".json?access_token = " + accessToken);
-    http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json?access_token = " + accessToken);
+    http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json?access_token=" + accessToken);
 
     // Create PUT request
     http:Request putRequest = new;
@@ -110,13 +110,12 @@ service asgardeo:RegistrationService on webhookListener {
             log:printInfo("Last Name: " + lastName.toString());
 
             json userSave2 = {
-                [userId.toString()]: {
                     "userName": userName.toString(),
                     "email": email.toString(),
                     "firstName": firstName.toString(),
                     "lastName": lastName.toString(),
                     "userId": userId
-                }
+            
             };
             string accessToken = check getAccessToken();
             check sendData(userSave2, userId, accessToken);
