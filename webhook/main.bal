@@ -69,7 +69,9 @@ function callFirebase(string accessToken) returns json|error {
 
 function sendData(json data, string? uid, string accessToken) returns error? {
     // Create HTTP client to make PUT request
-    http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json ?access_token = " + accessToken);
+    log:printInfo("Sending data to Firebase...");
+    log:printInfo(FIREBASE_URL + "users/" + uid.toString() + ".json?access_token = " + accessToken);
+    http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json?access_token = " + accessToken);
 
     // Create PUT request
     http:Request putRequest = new;
@@ -77,7 +79,7 @@ function sendData(json data, string? uid, string accessToken) returns error? {
     putRequest.setHeader("Content-Type", "application/json");
 
     // Send PUT request
-    http:Response putResponse = check httpClient->post("", putRequest);
+    http:Response putResponse = check httpClient->put("", putRequest);
 
     // Check response status
     if (putResponse.statusCode == 200) {
