@@ -163,6 +163,10 @@ const Classroom: React.FC = () => {
 
   return (
     <div className="classroom">
+      {/* loading  */}
+      {loading && <div className="spinner-border" role="status">
+        <span className="sr-only"></span>
+      </div>}
       <br />
       <div className="row">
         <div className="col-3">

@@ -7,7 +7,9 @@ import Classroom from "./classroom";
 
 export const BookStore: FunctionComponent = (): ReactElement => {
   const {
-    getAccessToken,getBasicUserInfo
+    state,
+    getAccessToken,
+    getBasicUserInfo
   } = useAuthContext();
 
   const [user, setUser] = useState(null);
@@ -27,6 +29,8 @@ export const BookStore: FunctionComponent = (): ReactElement => {
         const getBasicUserInfos = await getBasicUserInfo();
         console.log(getBasicUserInfos);
         setUser(getBasicUserInfos);
+
+        console.log('user', state);
         // setBooks(response.data);
       } catch (error) {
         console.error('Error fetching books:', error);

@@ -65,7 +65,7 @@ export const DefaultLayout: FunctionComponent<PropsWithChildren<DefaultLayoutPro
                     isLoading
                         ? <div className="content">
                            <div className="spinner-border" role="status">
-  <span className="sr-only">Loading...</span>
+  <span className="sr-only"></span>
 </div>
 
                         </div>
