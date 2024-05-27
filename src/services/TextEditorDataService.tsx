@@ -11,8 +11,6 @@ class TextEditorDataService {
     }
 
     
-
-
     getAll() {
         return get(ref(db, 'codes/'));
     }
@@ -44,6 +42,10 @@ class TextEditorDataService {
 
     addChat(data:any) {
         return push(ref(db, 'chats'), data)
+    }
+
+    getUserByUid(uid:any) {
+        return get(child(ref(db, 'users'), uid));
     }
 }
 

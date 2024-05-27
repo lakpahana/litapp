@@ -107,22 +107,16 @@ service asgardeo:RegistrationService on webhookListener {
             log:printInfo("First Name: " + firstName.toString());
             log:printInfo("Last Name: " + lastName.toString());
 
-            json userSave = {
-                "userId": userId,
-                "userName": userName,
-                "email": email,
-                "firstName": firstName,
-                "lastName": lastName
-            };
-
-            //make userid as the key
             json userSave2 = {
-                userId: userSave
+                [userId.toString()]: {
+                    "userName": userName.toString(),
+                    "email": email.toString(),
+                    "firstName": firstName.toString(),
+                    "lastName": lastName.toString(),
+                    "userId": userId
+                }
             };
-
-            // Generate the access token
             string accessToken = check getAccessToken();
-            // Send data to Firebase
             check sendData(userSave2, accessToken);
 
         } else {

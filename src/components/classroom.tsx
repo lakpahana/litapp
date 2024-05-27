@@ -44,13 +44,20 @@ const Classroom: React.FC = () => {
   // };
 
   const userFunctions = async () => {
+
     const userBasic = await getBasicUserInfo();
-    let user = {
-      uid: userBasic?.sub,
-      displayName: "John Doe3",
-      name: "John Doe3"
-    }
-    setCurrentUser(user);
+    
+    TextEditorDataService.getUserByUid(userBasic?.sub).then((snapshot) => {
+      console.log('snapshot', snapshot.val());
+      let user = {
+        uid: userBasic?.sub,
+        displayName: snapshot.val().firstName,
+        name: snapshot.val().firstName
+      }
+
+      setCurrentUser(user);
+    });
+ 
   }
 
 
