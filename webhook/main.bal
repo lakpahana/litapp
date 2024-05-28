@@ -1,95 +1,92 @@
 import ballerina/http;
-import ballerina/jwt;
 import ballerina/log;
-import ballerina/time;
 import ballerinax/trigger.asgardeo;
+
+import lakpahana/firebase_realtime_database;
 
 configurable asgardeo:ListenerConfig config = ?;
 listener http:Listener httpListener = new (8090);
 listener asgardeo:Listener webhookListener = new (config, httpListener);
-string EMAILADDRESS = "firebase-adminsdk-2vu9c@ballerina-firebase.iam.gserviceaccount.com";
-string PROJECTID = "ballerina-firebase";
-string FIREBASE_URL = "https://ballerina-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-function generateJWT() returns string|error {
-    time:Utc currentTime = time:utcNow();
+// function generateJWT() returns string|error {
+//     time:Utc currentTime = time:utcNow();
 
-    int nowSeconds = currentTime[0];
-    int expSeconds = nowSeconds + 60;
+//     int nowSeconds = currentTime[0];
+//     int expSeconds = nowSeconds + 60;
 
-    jwt:IssuerConfig issuerConfig = {
-        issuer: EMAILADDRESS,
-        audience: "https://www.googleapis.com/oauth2/v4/token",
-        expTime: 60,  // Token expires in 60 seconds
-        signatureConfig: {
-            algorithm: jwt:RS256,
-            config: {
-                keyFile: "./my.key"
-            }
-        },
-        customClaims: {
-            iss: EMAILADDRESS,
-            scope: "https://www.googleapis.com/auth/firebase.database https://www.googleapis.com/auth/userinfo.email",
-            aud: "https://www.googleapis.com/oauth2/v4/token",
-            iat: nowSeconds,
-            exp: expSeconds
-        }
-    };
+//     jwt:IssuerConfig issuerConfig = {
+//         issuer: EMAILADDRESS,
+//         audience: "https://www.googleapis.com/oauth2/v4/token",
+//         expTime: 60,  // Token expires in 60 seconds
+//         signatureConfig: {
+//             algorithm: jwt:RS256,
+//             config: {
+//                 keyFile: "./my.key"
+//             }
+//         },
+//         customClaims: {
+//             iss: EMAILADDRESS,
+//             scope: "https://www.googleapis.com/auth/firebase.database https://www.googleapis.com/auth/userinfo.email",
+//             aud: "https://www.googleapis.com/oauth2/v4/token",
+//             iat: nowSeconds,
+//             exp: expSeconds
+//         }
+//     };
 
-    // log:printInfo(PRIVATEKEY);
+//     // log:printInfo(PRIVATEKEY);
 
-    string jwtToken = check jwt:issue(issuerConfig);
-    return jwtToken;
-}
+//     string jwtToken = check jwt:issue(issuerConfig);
+//     return jwtToken;
+// }
 
-function getAccessToken() returns string|error {
-    string jwtToken = check generateJWT();
+// function getAccessToken() returns string|error {
+//     string jwtToken = check generateJWT();
 
-    http:Client oauthClient = check new ("https://www.googleapis.com");
+//     http:Client oauthClient = check new ("https://www.googleapis.com");
 
-    http:Request tokenRequest = new;
-    tokenRequest.setPayload("grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=" + jwtToken);
-    tokenRequest.setHeader("Content-Type", "application/x-www-form-urlencoded");
+//     http:Request tokenRequest = new;
+//     tokenRequest.setPayload("grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=" + jwtToken);
+//     tokenRequest.setHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    http:Response tokenResponse = check oauthClient->post("/oauth2/v4/token", tokenRequest);
-    var jsonPayload = tokenResponse.getJsonPayload();
-    if jsonPayload is json {
-        return (check jsonPayload.access_token).toString();
-    } else {
-        return error("Failed to get access token");
-    }
-}
+//     http:Response tokenResponse = check oauthClient->post("/oauth2/v4/token", tokenRequest);
+//     var jsonPayload = tokenResponse.getJsonPayload();
+//     if jsonPayload is json {
+//         return (check jsonPayload.access_token).toString();
+//     } else {
+//         return error("Failed to get access token");
+//     }
+// }
 
-function callFirebase(string accessToken) returns json|error {
-    string firebaseUrl = "users.json?access_token=" + accessToken;
-    http:Client firebaseClient = check new (FIREBASE_URL);
-    http:Response firebaseResponse = check firebaseClient->get(firebaseUrl);
-    return check firebaseResponse.getJsonPayload();
-}
+// function callFirebase(string accessToken) returns json|error {
+//     string firebaseUrl = "users.json?access_token=" + accessToken;
+//     http:Client firebaseClient = check new (FIREBASE_URL);
+//     http:Response firebaseResponse = check firebaseClient->get(firebaseUrl);
+//     return check firebaseResponse.getJsonPayload();
+// }
 
-function sendData(json data, string? uid, string accessToken) returns error? {
-    // Create HTTP client to make PUT request
-    log:printInfo("Sending data to Firebase...");
-    log:printInfo(FIREBASE_URL + "users/" + uid.toString() + ".json?access_token = " + accessToken);
-    http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json?access_token=" + accessToken);
+// function sendData(json data, string? uid, string accessToken) returns error? {
+//     // Create HTTP client to make PUT request
+//     log:printInfo("Sending data to Firebase...");
+//     log:printInfo(FIREBASE_URL + "users/" + uid.toString() + ".json?access_token = " + accessToken);
+//     http:Client httpClient = check new (FIREBASE_URL + "users/" + uid.toString() + ".json?access_token=" + accessToken);
 
-    // Create PUT request
-    http:Request putRequest = new;
-    putRequest.setPayload(data.toString());
-    putRequest.setHeader("Content-Type", "application/json");
+//     // Create PUT request
+//     http:Request putRequest = new;
+//     putRequest.setPayload(data.toString());
+//     putRequest.setHeader("Content-Type", "application/json");
 
-    // Send PUT request
-    http:Response putResponse = check httpClient->put("", putRequest);
+//     // Send PUT request
+//     http:Response putResponse = check httpClient->put("", putRequest);
 
-    // Check response status
-    if (putResponse.statusCode == 200) {
-        log:printInfo("Data successfully sent to Firebase!");
-        return null;
-    } else {
-        log:printError("Failed to send data to Firebase. Status code: " + string `putResponse.statusCode`);
-        return error("Failed to send data to Firebase");
-    }
-}
+//     // Check response status
+//     if (putResponse.statusCode == 200) {
+//         log:printInfo("Data successfully sent to Firebase!");
+//         return null;
+//     } else {
+//         log:printError("Failed to send data to Firebase. Status code: " + string `putResponse.statusCode`);
+//         return error("Failed to send data to Firebase");
+//     }
+// }
 
 service asgardeo:RegistrationService on webhookListener {
     remote function onAddUser(asgardeo:AddUserEvent event) returns error? {
@@ -117,8 +114,30 @@ service asgardeo:RegistrationService on webhookListener {
                     "userId": userId
             
             };
-            string accessToken = check getAccessToken();
-            check sendData(userSave2, userId, accessToken);
+
+            json config = {
+                apiKey: "AIzaSyAa3zeEFw7BYbBu6d8vhGX2T2hYoHtSoQ8",
+                authDomain: "ballerina-firebase.firebaseapp.com",
+                databaseURL: "https://ballerina-firebase-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "ballerina-firebase",
+                storageBucket: "ballerina-firebase.appspot.com",
+                messagingSenderId: "476129313390",
+                appId: "1:476129313390:web:3b39afceca7ead21819c7f",
+                measurementId: "G-XY2ZB9Z8D5",
+                serviceAccountKeyPath: "serviceAccountKey.json"
+            };
+
+            firebase_realtime_database:FirebaseDatabaseClient firebaseClient = check new (config, "./bal.json");
+            string path = "/users/" + userId.toString();
+            error? e = firebaseClient.patchData(path, userSave2);
+            if (e is error) {
+                log:printError("Error: " + e.message());
+            } else {
+                log:printInfo("Data successfully sent to Firebase!");
+            }
+
+            // string accessToken = check getAccessToken();
+            // check sendData(userSave2, userId, accessToken);
 
         } else {
             // Handle the case where eventData2 is null
